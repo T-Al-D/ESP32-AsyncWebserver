@@ -1,5 +1,6 @@
 #include "AsyncWebserver.h"
 #include "Displaymanager.h"
+#include "GPIO.h"
 #include <ESPAsyncWebServer.h>
 #include <WiFi.h>
 #include <Wire.h>
@@ -9,7 +10,7 @@ String output = "";
 bool button1status = false;
 bool button2status = false;
 
-// Network credentials
+// network credentials
 const char* SSID = "ESP32-Experiment";
 const char* PASSWORD = "12345678";
 
@@ -27,6 +28,9 @@ void setup()
     // Setup Wi-Fi
     WiFi.softAP(SSID, PASSWORD);
     WiFi.config(local_ip, gateway, subnet);
+
+    // set the pins
+    setPins();
 
     // Initialize display
     initDisplay();

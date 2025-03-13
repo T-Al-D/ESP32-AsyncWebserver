@@ -1,4 +1,5 @@
 #include "AsyncWebserver.h"
+#include "GPIO.h"
 #include "HTML.h"
 #include <Arduino.h>
 #include <WiFi.h>
@@ -43,14 +44,31 @@ void handleOnConnect(AsyncWebServerRequest* request)
 
 void handleButtonToggle(AsyncWebServerRequest* request, int buttonNumber, bool newStatus)
 {
-    if (buttonNumber == 1) {
+    // depending wether current status has to be set to LOW or High
+    uint8_t statusValue = newStatus ? HIGH : LOW;
+    String currentStatus = String(newStatus ? "ON" : "OFF");
+    String pressedButton = "";
+
+    // switch depending which button was pressed
+    switch (buttonNumber) {
+    case 1:
         button1status = newStatus;
-        output = "Button1\nStatus\nchange:" + String(newStatus ? "ON" : "OFF");
-    } else if (buttonNumber == 2) {
+        digitalWrite(LED1, statusValue);
+        pressedButton = "Button1";
+        break;
+    case 2:
         button2status = newStatus;
-        output = "Button2\nStatus\nchange:" + String(newStatus ? "ON" : "OFF");
+        // currently no pin set
+        pressedButton = "Button2";
+        break;
+
+    default:
+        pressedButton = "ERROR";
+        break;
     }
 
+    // output string and sending request
+    output = pressedButton + "\nStatus\nchange:" + currentStatus;
     request->send(200, "text/html", SendHTML(button1status, button2status, output));
 }
 
