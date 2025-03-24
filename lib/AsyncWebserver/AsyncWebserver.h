@@ -8,6 +8,7 @@ void setupAsyncWebServer(AsyncWebServer& server);
 void handleOnConnect(AsyncWebServerRequest* request);
 void handleButtonToggle(AsyncWebServerRequest* request, int buttonNumber, bool newStatus);
 void handleInputText(AsyncWebServerRequest* request);
+void handleRefereshStatuses(AsyncWebServerRequest* request);
 void handleNotFound(AsyncWebServerRequest* request);
 
 #endif

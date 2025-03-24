@@ -27,6 +27,12 @@ void setupAsyncWebServer(AsyncWebServer& server)
     });
     server.on("/inputText", HTTP_GET, handleInputText);
 
+    // define the "status-page" for the javascript refesh
+    server.on("/refreshStatuses", HTTP_GET, [](AsyncWebServerRequest* request) {
+        handleRefereshStatuses(request);
+    });
+
+    // in case no route was found
     server.onNotFound(handleNotFound);
 
     // debug current IP Adress
@@ -58,7 +64,7 @@ void handleButtonToggle(AsyncWebServerRequest* request, int buttonNumber, bool n
         break;
     case 2:
         button2status = newStatus;
-        // currently no pin set
+        digitalWrite(LED2, statusValue);
         pressedButton = "Button2";
         break;
 
@@ -80,6 +86,12 @@ void handleInputText(AsyncWebServerRequest* request)
     }
     output = "Text :\n" + otherInfo;
     request->send(200, "text/html", SendHTML(button1status, button2status, otherInfo));
+}
+
+void handleRefereshStatuses(AsyncWebServerRequest* request)
+{
+    output = "refresh... for all";
+    request->send(200, "text/html", SendHTML(button1status, button2status, output));
 }
 
 void handleNotFound(AsyncWebServerRequest* request)

@@ -7,12 +7,12 @@ String DesignButton(bool boolean, String unit)
         if (boolean) {
             result = R"rawliteral(
             <p>BUTTON 1 Status: ON</p>
-            <a class="button button-on" href="/button1off">Turn off!</a>
+            <a id="button1" class="button button-on" href="/button1off">Turn off!</a>
             )rawliteral";
         } else {
             result = R"rawliteral(
             <p>BUTTON 1 Status: OFF</p>
-            <a class="button button-off" href="/button1on">Turn on!</a>
+            <a id="button1" class="button button-off" href="/button1on">Turn on!</a>
             )rawliteral";
         }
     }
@@ -64,8 +64,13 @@ String SendHTML(bool button1status, bool button2status, String otherInfo)
     )rawliteral";
 
     // Button designs
-    ptr += DesignButton(button1status, "button1");
-    ptr += DesignButton(button2status, "button2");
+    ptr += "<!-- Data Unit Separator -->";
+    ptr += R"rawliteral(<div id="button1"> )rawliteral";
+    ptr += DesignButton(button1status, "button1") + "</div>";
+    ptr += "<!-- Data Unit Separator -->";
+    ptr += R"rawliteral(<div id="button2"> )rawliteral";
+    ptr += DesignButton(button2status, "button2") + "</div>";
+    ptr += "<!-- Data Unit Separator -->";
 
     // Other Info in <pre>
     ptr += R"rawliteral(
@@ -82,10 +87,27 @@ String SendHTML(bool button1status, bool button2status, String otherInfo)
     )rawliteral";
 
     // pre text
-    ptr += otherInfo;
+    ptr += otherInfo + " </pre>";
 
+    // script which asks for the current status of the "data unit" every setInterval(milliseconds)
+    // and refreshes the "data unit" (even after reset) -> HTTP-Request
+    // makes page dynamic
     ptr += R"rawliteral(
-    </pre>
+    <script>
+    function fetchButtonStatus() {
+        fetch('/refreshStatuses')
+        .then(response => response.text())
+        .then(data => {
+            const parts = data.split("<!-- Data Unit Separator -->");
+            document.getElementById('button1').innerHTML = parts[1];
+            document.getElementById('button2').innerHTML = parts[2];
+        });
+    }
+
+    setInterval(fetchButtonStatus, 2000);
+    fetchButtonStatus();
+    </script>
+
     </body>
     </html>
     )rawliteral";
