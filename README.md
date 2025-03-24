@@ -1,7 +1,12 @@
 # ESP32-AsyncWebserver
 
 A small project for an **Asyc Webserver** on ESP32: Access Point (Standalone) is used.
-Basic webserver with 2 buttons for control.
+Functions:
+
+- 2 Buttons on a dynamic Website to control
+- Website refreshes, if state changes
+- one small input element for textinput
+- photo-resistor is being read for button1 and button2
 
 Tools for the project:
 
@@ -22,5 +27,5 @@ Other Info:
 
 Usage of space in kilobyte (during compile):
 
-- RAM : 44,14
-- Flash : 779,12
+- RAM : 44,5
+- Flash : 787,8

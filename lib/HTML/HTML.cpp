@@ -59,8 +59,8 @@ String SendHTML(bool button1status, bool button2status, String otherInfo)
     </style>
     </head>
     <body>
-    <h1>ESP32 Web Server</h1>
-    <h3>Using Access Point (AP) Mode</h3>
+    <h2>ESP32 Web Server</h2>
+    <h4>Using Access Point (AP) Mode</h4>
     )rawliteral";
 
     // Button designs

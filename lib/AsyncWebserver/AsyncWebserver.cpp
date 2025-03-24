@@ -1,7 +1,5 @@
 #include "AsyncWebserver.h"
-#include "GPIO.h"
 #include "HTML.h"
-#include <Arduino.h>
 #include <WiFi.h>
 
 // from main.cpp
@@ -59,12 +57,10 @@ void handleButtonToggle(AsyncWebServerRequest* request, int buttonNumber, bool n
     switch (buttonNumber) {
     case 1:
         button1status = newStatus;
-        digitalWrite(LED1, statusValue);
         pressedButton = "Button1";
         break;
     case 2:
         button2status = newStatus;
-        digitalWrite(LED2, statusValue);
         pressedButton = "Button2";
         break;
 
@@ -90,7 +86,6 @@ void handleInputText(AsyncWebServerRequest* request)
 
 void handleRefereshStatuses(AsyncWebServerRequest* request)
 {
-    output = "refresh... for all";
     request->send(200, "text/html", SendHTML(button1status, button2status, output));
 }
 

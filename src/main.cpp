@@ -45,6 +45,8 @@ void setup()
 // put your main code here, to run repeatedly:
 void loop()
 {
-    Serial.println(output);
+    readSensors();
+    writeOutputs();
+    // Serial.println(output);
     showOutput(output);
 }

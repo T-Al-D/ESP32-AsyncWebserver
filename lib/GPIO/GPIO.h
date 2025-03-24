@@ -8,7 +8,11 @@
 extern const short LED1;
 extern const short LED2;
 
+extern const short PHOTO_RESISTOR_1;
+extern const short PHOTO_RESISTOR_2;
+
 void setPins();
-void checkForEmergecy();
+void readSensors();
+void writeOutputs();
 
 #endif
