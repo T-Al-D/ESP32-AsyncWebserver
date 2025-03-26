@@ -1,13 +1,6 @@
 #include "Displaymanager.h"
 #include <Wire.h>
 
-// variables
-const short SCREEN_WIDTH = 128;
-const short SCREEN_HEIGHT = 64;
-const short OLED_SDA = 17;
-const short OLED_SCL = 18;
-const short OLED_RST = 21;
-const short BOARD_ADRESS = 0x3C;
 // from main.cpp
 extern String output;
 

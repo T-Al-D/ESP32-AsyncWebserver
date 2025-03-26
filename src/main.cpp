@@ -1,5 +1,6 @@
 #include "AsyncWebserver.h"
 #include "Displaymanager.h"
+#include "FactoryControl.h"
 #include "GPIO.h"
 #include <ESPAsyncWebServer.h>
 #include <WiFi.h>
@@ -9,6 +10,7 @@
 String output = "";
 bool button1status = false;
 bool button2status = false;
+bool allowAutomatedFactory = false;
 
 // network credentials
 const char* SSID = "ESP32-Experiment";
@@ -23,6 +25,7 @@ IPAddress subnet(255, 255, 255, 0);
 
 void setup()
 {
+    // set baudrate
     Serial.begin(115200);
 
     // Setup Wi-Fi
@@ -47,6 +50,11 @@ void loop()
 {
     readSensors();
     writeOutputs();
+
+    if (allowAutomatedFactory) {
+        runAutomatedFactoryControl();
+    }
+
     // Serial.println(output);
     showOutput(output);
 }

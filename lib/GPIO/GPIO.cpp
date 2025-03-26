@@ -1,5 +1,14 @@
 #include "GPIO.h"
 
+/* [env:esp32-s3-devkitm-1]
+LED1 = 46;LED2 = 45;
+PHOTO_RESISTOR_1 = 1; P_R_2 = 2;
+
+[env:az-delivery-devkit-v4]
+LED1 = 32;LED2 = 33;
+PHOTO_RESISTOR_1 = 0; P_R_2 = 2;
+*/
+
 // define the pins
 const short PHOTO_RESISTOR_1 = 1;
 const short PHOTO_RESISTOR_2 = 2;
@@ -44,6 +53,10 @@ void readSensors()
         output = "B2 stat\nchange:\nON";
         Serial.println("Photo_Sensor2 passed!");
     }
+
+    // for debug
+    Serial.println(photoResistorValue1);
+    Serial.println(photoResistorValue2);
 }
 
 // depending on the status, change the output
