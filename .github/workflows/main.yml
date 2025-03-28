@@ -60,4 +60,7 @@ jobs:
       # Build PlatformIO project for multiple environments (defined in platform.ini)
       - name: Build PlatformIO project for esp32-s3-devkitm-1
         run: pio ci --board esp32-s3-devkitm-1
+
+      #- name: Build PlatformIO project for az-delivery-devkit-v4
+      #  run: pio ci --board az-delivery-devkit-v4
           
