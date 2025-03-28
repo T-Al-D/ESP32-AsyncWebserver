@@ -1,0 +1,63 @@
+# name of workflow
+name: pio test
+
+# the workflow will alwas from on ANY push or pull request of this repository
+on:
+  push:
+  pull_request:
+
+# the github runner is ONLY ALLOWED TO READ !
+permissions:
+  contents: read
+
+# Which jobs should be executed in ths workflow ?
+jobs:
+  basic-mini-test:
+    # just because one test fails, dosen´t mean all the others should also fail
+    strategy:
+      fail-fast: false
+      matrix:
+        # multiple GitHub-Runners are going to run the different os
+        os: [ubuntu-latest, windows-latest]
+        python-version:
+          - "3.12"
+    # run on a (certain) virtual maschine
+    name: OS-Tests
+    runs-on: ${{ matrix.os }}
+    # steps to take while runnig the jobs
+    steps:
+      # fist of all, check code in repository
+      # "uses" references an action that has already been created
+      # either use "uses" or "run" BUT NOT TOGETHER!!!
+      # https://github.com/actions/setup-python
+      - name: Check Code in repository
+        uses: actions/checkout@v4
+        
+      - name: Set up Python(-versions)
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      # verify Python version
+      - name: Check Python version
+        run: |
+          python --version
+
+
+       # Install PlatformIO Core
+      - name: Install PlatformIO Core
+        run: pip install --upgrade platformio
+
+      # Cache PlatformIO dependencies
+      - name: Cache PlatformIO dependencies
+        uses: actions/cache@v4
+        with:
+            path: |
+              ~/.cache/pip
+              ~/.platformio/.cache
+            key: ${{ runner.os }}-pio
+
+      # Build PlatformIO project for multiple environments (defined in platform.ini)
+      - name: Build PlatformIO project for esp32-s3-devkitm-1
+        run: pio ci --board esp32-s3-devkitm-1
+          
