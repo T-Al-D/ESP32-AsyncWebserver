@@ -43,7 +43,6 @@ jobs:
         run: |
           python --version
 
-
        # Install PlatformIO Core
       - name: Install PlatformIO Core
         run: pip install --upgrade platformio
@@ -57,9 +56,13 @@ jobs:
               ~/.platformio/.cache
             key: ${{ runner.os }}-pio
 
+      # Build PlatformIO project for native environment
+      - name: Build PlatformIO project for native environment
+        run: pio ci --board native
+
       # Build PlatformIO project for multiple environments (defined in platform.ini)
-      - name: Build PlatformIO project for esp32-s3-devkitm-1
-        run: pio ci --board esp32-s3-devkitm-1
+      #- name: Build PlatformIO project for esp32-s3-devkitm-1
+      #  run: pio ci --board esp32-s3-devkitm-1
 
       #- name: Build PlatformIO project for az-delivery-devkit-v4
       #  run: pio ci --board az-delivery-devkit-v4
