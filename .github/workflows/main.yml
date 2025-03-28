@@ -57,7 +57,7 @@ jobs:
             key: ${{ runner.os }}-pio
 
       # Test PlatformIO project for native environment
-      - name: Build PlatformIO project for native environment
+      - name: Test PlatformIO project for native environment
         run: pio test --environment native -v
 
       # Build PlatformIO project for multiple environments (defined in platform.ini)
