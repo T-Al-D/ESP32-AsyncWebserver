@@ -18,7 +18,7 @@ jobs:
       fail-fast: false
       matrix:
         # multiple GitHub-Runners are going to run the different os
-        os: [ubuntu-latest, windows-latest]
+        os: [windows-latest]
         python-version:
           - "3.12"
     # run on a (certain) virtual maschine
@@ -58,7 +58,7 @@ jobs:
 
       # Build PlatformIO project for native environment
       - name: Build PlatformIO project for native environment
-        run: pio ci --platform native
+        run: pio ci --board native -v
 
       # Build PlatformIO project for multiple environments (defined in platform.ini)
       #- name: Build PlatformIO project for esp32-s3-devkitm-1
