@@ -9,7 +9,6 @@ void tearDown(void)
 {
     // clean stuff up here
 }
-/////
 
 void test_example(void)
 {
@@ -22,27 +21,14 @@ void test_example2(void)
     TEST_ASSERT_NOT_EQUAL(1, 0);
 }
 
-////
-void setup()
-{
-    UNITY_BEGIN();
-}
-
-void loop()
-{
-    RUN_TEST(test_example2);
-    RUN_TEST(test_example);
-    UNITY_END();
-}
-
 int main(int argc, char** argv)
 {
-    // UNITY_BEGIN();
+    UNITY_BEGIN();
 
-    // Run your test functions here
-    //RUN_TEST(test_example);
-    
+    //Run your test functions here
+    RUN_TEST(test_example);
+    RUN_TEST(test_example2);
 
-    // UNITY_END();
+    UNITY_END();
     return 0;
 }

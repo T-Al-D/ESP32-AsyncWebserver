@@ -23,9 +23,11 @@ Chip where this Programm was developed/tested:
 
 Other Info:
 
+- platform.ini contains a [common](https://github.com/T-Al-D/ESP32-AsyncWebserver/blob/main/platformio.ini) enviorement which all other environments can use (with variables!)
+- If the **native** environment is unsed for testing, please install gcc and g++, and put them in the systemvariables!
 - the partitions on the board can be changed in [huge_app.csv](https://github.com/T-Al-D/ESP32-AsyncWebserver/blob/main/data/partitions/huge_app.csv)
 
 Usage of space in kilobyte (during compile):
 
 - RAM : 44,5
-- Flash : 787,8
+- Flash : 787,9

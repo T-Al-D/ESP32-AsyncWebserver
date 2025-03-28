@@ -1,6 +1,5 @@
 #include "AsyncWebserver.h"
 #include "Displaymanager.h"
-#include "FactoryControl.h"
 #include "GPIO.h"
 #include <ESPAsyncWebServer.h>
 #include <WiFi.h>
@@ -10,7 +9,6 @@
 String output = "";
 bool button1status = false;
 bool button2status = false;
-bool allowAutomatedFactory = false;
 
 // network credentials
 const char* SSID = "ESP32-Experiment";
@@ -50,10 +48,6 @@ void loop()
 {
     readSensors();
     writeOutputs();
-
-    if (allowAutomatedFactory) {
-        runAutomatedFactoryControl();
-    }
 
     // Serial.println(output);
     showOutput(output);
