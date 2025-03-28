@@ -58,7 +58,7 @@ jobs:
 
       # Build PlatformIO project for native environment
       - name: Build PlatformIO project for native environment
-        run: pio ci --platform native -v
+        run: pio ci --environment native -v
 
       # Build PlatformIO project for multiple environments (defined in platform.ini)
       #- name: Build PlatformIO project for esp32-s3-devkitm-1
