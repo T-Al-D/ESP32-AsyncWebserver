@@ -1,4 +1,4 @@
-#include "Displaymanager.h"
+#include "DisplayManager.h"
 #include <Wire.h>
 
 // from main.cpp

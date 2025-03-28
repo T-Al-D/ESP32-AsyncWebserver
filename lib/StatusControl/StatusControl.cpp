@@ -1,4 +1,4 @@
-#include "GPIO.h"
+#include "StatusControl.h"
 
 /* [env:esp32-s3-devkitm-1]
 LED1 = 46;LED2 = 45;
@@ -16,9 +16,8 @@ const short PHOTO_RESISTOR_2 = 2;
 const short LED1 = 46;
 const short LED2 = 45;
 
-// from main.cpp
-extern bool button1status;
-extern bool button2status;
+bool button1status = false;
+bool button2status = false;
 extern String output;
 
 void setPins()

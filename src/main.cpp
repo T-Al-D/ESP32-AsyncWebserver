@@ -1,14 +1,12 @@
 #include "AsyncWebserver.h"
-#include "Displaymanager.h"
-#include "GPIO.h"
+#include "DisplayManager.h"
+#include "StatusControl.h"
 #include <ESPAsyncWebServer.h>
 #include <WiFi.h>
 #include <Wire.h>
 
 // GLOBAL VARIABLES
 String output = "";
-bool button1status = false;
-bool button2status = false;
 
 // network credentials
 const char* SSID = "ESP32-Experiment";

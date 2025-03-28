@@ -1,12 +1,11 @@
 #include "AsyncWebserver.h"
 #include "HTML.h"
+#include "StatusControl.h"
 #include <WiFi.h>
 
-// from main.cpp
 extern bool button1status;
 extern bool button2status;
 extern String output;
-extern String SendHTML(bool, bool, String);
 
 void setupAsyncWebServer(AsyncWebServer& server)
 {
