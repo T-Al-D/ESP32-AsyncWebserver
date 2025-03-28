@@ -56,7 +56,7 @@ jobs:
               ~/.platformio/.cache
             key: ${{ runner.os }}-pio
 
-      # Build PlatformIO project for native environment
+      # Test PlatformIO project for native environment
       - name: Build PlatformIO project for native environment
         run: pio test --environment native -v
 
