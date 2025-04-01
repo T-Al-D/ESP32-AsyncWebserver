@@ -10,6 +10,7 @@ extern String output;
 void setupAsyncWebServer(AsyncWebServer& server)
 {
     server.on("/", HTTP_GET, handleOnConnect);
+
     server.on("/button1on", HTTP_GET, [](AsyncWebServerRequest* request) {
         handleButtonToggle(request, 1, true);
     });
@@ -22,13 +23,18 @@ void setupAsyncWebServer(AsyncWebServer& server)
     server.on("/button2off", HTTP_GET, [](AsyncWebServerRequest* request) {
         handleButtonToggle(request, 2, false);
     });
-    server.on("/inputText", HTTP_GET, handleInputText);
+
+    // reset everything
+    server.on("/reset", HTTP_GET, [](AsyncWebServerRequest* request) {
+        handleReset(request);
+    });
 
     // define the "status-page" for the javascript refesh
     server.on("/refreshStatuses", HTTP_GET, [](AsyncWebServerRequest* request) {
         handleRefereshStatuses(request);
     });
 
+    server.on("/inputText", HTTP_GET, handleInputText);
     // in case no route was found
     server.onNotFound(handleNotFound);
 
@@ -73,6 +79,19 @@ void handleButtonToggle(AsyncWebServerRequest* request, int buttonNumber, bool n
     request->send(200, "text/html", SendHTML(button1status, button2status, output));
 }
 
+void handleReset(AsyncWebServerRequest* request)
+{
+    button1status = false;
+    button2status = false;
+    output = "RESET ALL";
+    request->send(200, "text/html", SendHTML(button1status, button2status, output));
+}
+
+void handleRefereshStatuses(AsyncWebServerRequest* request)
+{
+    request->send(200, "text/html", SendHTML(button1status, button2status, output));
+}
+
 void handleInputText(AsyncWebServerRequest* request)
 {
     String otherInfo = "";
@@ -81,11 +100,6 @@ void handleInputText(AsyncWebServerRequest* request)
     }
     output = "Text :\n" + otherInfo;
     request->send(200, "text/html", SendHTML(button1status, button2status, otherInfo));
-}
-
-void handleRefereshStatuses(AsyncWebServerRequest* request)
-{
-    request->send(200, "text/html", SendHTML(button1status, button2status, output));
 }
 
 void handleNotFound(AsyncWebServerRequest* request)

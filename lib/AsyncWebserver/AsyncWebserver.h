@@ -5,10 +5,13 @@
 #include <ESPAsyncWebServer.h>
 
 void setupAsyncWebServer(AsyncWebServer& server);
+
 void handleOnConnect(AsyncWebServerRequest* request);
 void handleButtonToggle(AsyncWebServerRequest* request, int buttonNumber, bool newStatus);
-void handleInputText(AsyncWebServerRequest* request);
+void handleReset(AsyncWebServerRequest* request);
 void handleRefereshStatuses(AsyncWebServerRequest* request);
+
+void handleInputText(AsyncWebServerRequest* request);
 void handleNotFound(AsyncWebServerRequest* request);
 
 #endif
