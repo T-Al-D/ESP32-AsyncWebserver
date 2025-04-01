@@ -4,9 +4,11 @@ A small project for an **Asyc Webserver** on ESP32: Access Point (Standalone) is
 Functions:
 
 - 2 buttons on a dynamic website to control
+- extra button for reset
 - photo-resistor is being read for button1 and button2
 - website refreshes, if state changes
 - one small input element for textinput
+- website "prints" the textinput
 
 Tools for the project:
 
