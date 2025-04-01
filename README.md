@@ -26,7 +26,7 @@ Other Info:
 - platform.ini contains a [common](https://github.com/T-Al-D/ESP32-AsyncWebserver/blob/main/platformio.ini) environment which all other environments can use (with variables!)
 - If the **native** environment is unsed for testing, please install gcc and g++, and put them in the systemvariables!
 - The partitions on the board can be changed in [huge_app.csv](https://github.com/T-Al-D/ESP32-AsyncWebserver/blob/main/data/partitions/huge_app.csv).
-- If you wnat to connect to the asyncWebserber via mobile, you have to turn off your mobile data!
+- If you wnat to connect to the asyncWebserber via mobile, you have to turn off your mobile data and turn on your WiFi!
 - Test for native can be written, if needed but IoT exclusive libraries (example: "Aduino.h") can´t be tested on native!
 
 Usage of space in kilobyte (during compile -> duration 33s):
