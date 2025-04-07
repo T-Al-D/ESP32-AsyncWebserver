@@ -10,7 +10,7 @@ Functions:
 - one small input element for textinput
 - website "prints" the textinput
 
-Tools used for the project:
+Tools that I used for the project:
 
 - [ESP Tool](https://espressif.github.io/esptool-js/)
 - [Platform.IO for VSCODE](https://platformio.org/install/ide?install=vscode)
