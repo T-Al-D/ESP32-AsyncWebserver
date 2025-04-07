@@ -10,12 +10,12 @@ Functions:
 - one small input element for textinput
 - website "prints" the textinput
 
-Tools for the project:
+Tools that I used for the project:
 
 - [ESP Tool](https://espressif.github.io/esptool-js/)
 - [Platform.IO for VSCODE](https://platformio.org/install/ide?install=vscode)
 - [Driver for the USB-URAT connection](https://www.silabs.com/developer-tools/usb-to-uart-bridge-vcp-drivers?tab=downloads)
-- [Documentation of the board](<https://resource.heltec.cn/download/WiFi_Kit_32_V3/HTIT-WiFi%20kit32_V3(Rev1.1).pdf>)
+- [Documentation of the board](<https://resource.heltec.cn/download/WiFi_Kit_32_V3>)
 
 Chip where this Programm was developed/tested:
 

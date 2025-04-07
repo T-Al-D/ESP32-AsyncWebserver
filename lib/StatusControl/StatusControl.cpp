@@ -16,8 +16,8 @@ const short PHOTO_RESISTOR_2 = 2;
 const short LED1 = 46;
 const short LED2 = 45;
 
-bool button1status = false;
-bool button2status = false;
+bool button1Status = false;
+bool button2Status = false;
 extern String output;
 
 void setPins()
@@ -44,30 +44,31 @@ void readSensors()
 
     // react to certain sensors
     if (photoResistorValue1 > 1300) {
-        button1status = true;
+        button1Status = true;
         output = "B1 stat\nchange:\nON";
         Serial.println("Photo_Sensor1 passed!");
     } else if (photoResistorValue2 > 1300) {
-        button2status = true;
+        button2Status = true;
         output = "B2 stat\nchange:\nON";
         Serial.println("Photo_Sensor2 passed!");
     }
 
-    // for debug
+    /* for debug
     Serial.println(photoResistorValue1);
     Serial.println(photoResistorValue2);
+    */
 }
 
 // depending on the status, change the output
 void writeOutputs()
 {
-    if (button1status) {
+    if (button1Status) {
         digitalWrite(LED1, HIGH);
     } else {
         digitalWrite(LED1, LOW);
     }
 
-    if (button2status) {
+    if (button2Status) {
         digitalWrite(LED2, HIGH);
     } else {
         digitalWrite(LED2, LOW);

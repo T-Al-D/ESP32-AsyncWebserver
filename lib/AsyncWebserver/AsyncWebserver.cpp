@@ -3,8 +3,8 @@
 #include "StatusControl.h"
 #include <WiFi.h>
 
-extern bool button1status;
-extern bool button2status;
+extern bool button1Status;
+extern bool button2Status;
 extern String output;
 
 void setupAsyncWebServer(AsyncWebServer& server)
@@ -45,10 +45,10 @@ void setupAsyncWebServer(AsyncWebServer& server)
 void handleOnConnect(AsyncWebServerRequest* request)
 {
     Serial.println("Received request on /");
-    button1status = false;
-    button2status = false;
+    button1Status = false;
+    button2Status = false;
     output = "HTTP up!\nButton1 & Button2: OFF ";
-    request->send(200, "text/html", SendHTML(button1status, button2status, output));
+    request->send(200, "text/html", SendHTML(button1Status, button2Status, output));
 }
 
 void handleButtonToggle(AsyncWebServerRequest* request, int buttonNumber, bool newStatus)
@@ -61,11 +61,11 @@ void handleButtonToggle(AsyncWebServerRequest* request, int buttonNumber, bool n
     // switch depending which button was pressed
     switch (buttonNumber) {
     case 1:
-        button1status = newStatus;
+        button1Status = newStatus;
         pressedButton = "Button1";
         break;
     case 2:
-        button2status = newStatus;
+        button2Status = newStatus;
         pressedButton = "Button2";
         break;
 
@@ -76,20 +76,20 @@ void handleButtonToggle(AsyncWebServerRequest* request, int buttonNumber, bool n
 
     // output string and sending request
     output = pressedButton + "\nStatus\nchange:" + currentStatus;
-    request->send(200, "text/html", SendHTML(button1status, button2status, output));
+    request->send(200, "text/html", SendHTML(button1Status, button2Status, output));
 }
 
 void handleReset(AsyncWebServerRequest* request)
 {
-    button1status = false;
-    button2status = false;
+    button1Status = false;
+    button2Status = false;
     output = "RESET ALL";
-    request->send(200, "text/html", SendHTML(button1status, button2status, output));
+    request->send(200, "text/html", SendHTML(button1Status, button2Status, output));
 }
 
 void handleRefereshStatuses(AsyncWebServerRequest* request)
 {
-    request->send(200, "text/html", SendHTML(button1status, button2status, output));
+    request->send(200, "text/html", SendHTML(button1Status, button2Status, output));
 }
 
 void handleInputText(AsyncWebServerRequest* request)
@@ -99,7 +99,7 @@ void handleInputText(AsyncWebServerRequest* request)
         otherInfo = request->getParam("param")->value();
     }
     output = "Text :\n" + otherInfo;
-    request->send(200, "text/html", SendHTML(button1status, button2status, otherInfo));
+    request->send(200, "text/html", SendHTML(button1Status, button2Status, otherInfo));
 }
 
 void handleNotFound(AsyncWebServerRequest* request)
