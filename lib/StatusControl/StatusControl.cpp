@@ -16,17 +16,20 @@ const short PHOTO_RESISTOR_2 = 2;
 const short LED1 = 46;
 const short LED2 = 45;
 
+// define statuses
 bool button1Status = false;
 bool button2Status = false;
+
+// "imoport" global variables
 extern String output;
 
 void setPins()
 {
-    // set output
+    // set inputs
     pinMode(PHOTO_RESISTOR_1, INPUT);
     pinMode(PHOTO_RESISTOR_2, INPUT);
 
-    // set output
+    // set outputs
     pinMode(LED1, OUTPUT);
     pinMode(LED2, OUTPUT);
 
