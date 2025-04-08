@@ -7,6 +7,7 @@
 
 // GLOBAL VARIABLES
 String output = "";
+unsigned long currentMilliSeconds = 0; // 0 to 4.294.967.295
 
 // network credentials
 const char* SSID = "ESP32-Experiment";
@@ -44,6 +45,10 @@ void setup()
 // put your main code here, to run repeatedly:
 void loop()
 {
+    // get current milliseconds since start
+    currentMilliSeconds = millis();
+    // Serial.println(currentMilliSeconds);
+    
     readSensors();
     writeOutputs();
 
