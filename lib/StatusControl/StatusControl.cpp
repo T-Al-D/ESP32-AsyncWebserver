@@ -209,7 +209,7 @@ void readSensors()
     }
 
     // after ... seconds the object in now on the sliding motor
-    // move to last conveyorBelt, CHECK IF BELT 2 IS STILL MOVING !!!   
+    // move to last conveyorBelt, CHECK IF BELT 2 IS STILL MOVING !!!
     else if (timeDifference > TASK_TIME && conveyorBelt3Status == 1 && conveyorBelt2Status != 1) {
         slideMotor2Status = 1;
         conveyorBelt3Status = 0;
@@ -222,23 +222,14 @@ void readSensors()
         Serial.println("INPUT_5 digital: 1");
         slideMotor2Status = 0;
         conveyorBelt4Status = 0;
+        timestamp = 0;
+        timeDifference = 0;
         Serial.println("conveyorBelt4 standstill");
     }
 
     /* for debug
     Serial.println(photoResistorValue1);
     Serial.println(photoResistorValue2);
-
-    conveyorBelt1Status = 1;
-    conveyorBelt2Status = 1;
-    conveyorBelt3Status = 1;
-    conveyorBelt4Status = 1;
-
-    slideMotor1Status = 1;
-    slideMotor2Status = 1;
-
-    taskMotor1Status = 1;
-    taskMotor2Status = 1;
     */
 }
 

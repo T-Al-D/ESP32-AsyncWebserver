@@ -48,7 +48,7 @@ void loop()
     // get current milliseconds since start
     currentMilliSeconds = millis();
     // Serial.println(currentMilliSeconds);
-    
+
     readSensors();
     writeOutputs();
 
