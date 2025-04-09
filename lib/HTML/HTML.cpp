@@ -20,6 +20,13 @@ String DesignButton(bool status, String unit)
 
 String DesignActuator(short status, String unit)
 {
+    /*
+    the resulting string should look like this (kind of):
+    result = R"rawliteral( <div class="actuators" id="actuators2">
+        <p>actuator 2: <span class="active-forward" id="status2">active-forward</span></p>
+        </div>)rawliteral";
+    */
+
     // staus of a actuator can be complex
     String statusStr = "inactive";
     switch (status) {
