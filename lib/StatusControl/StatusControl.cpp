@@ -52,11 +52,14 @@ const short CONVEYOR_BELT_4_OUT = 42;
 
 // time for specifc operations
 const short SWITCH_BELT_TO_SLIDE_TIME = 3000;
+const short SLIDE_MOVE_TIME = 2000;
 const short TASK_TIME = 3000;
 
 // for measuring time
-unsigned long timestamp = 0;
-unsigned long timeDifference = 0;
+unsigned long objectTimestamp = 0;
+unsigned long objTimeDiff = 0;
+unsigned long slideMotorTimeStamp = 0;
+unsigned long slideMotorTimeDiff = 0;
 
 /////////////////////////// FACTORY SIMULATION //////////////////////////
 
@@ -111,9 +114,12 @@ void setPins()
 
 void readSensors()
 {
-    // measure the time difference between the "global time" and the timestamp
-    if (timestamp > 0) {
-        timeDifference = currentMilliSeconds - timestamp;
+    // measure the time difference between the "global time" and the objectTimestamp
+    if (objectTimestamp > 0) {
+        objTimeDiff = currentMilliSeconds - objectTimestamp;
+    }
+    if (slideMotorTimeStamp > 0) {
+        slideMotorTimeDiff = currentMilliSeconds - slideMotorTimeStamp;
     }
 
     // set the ADC-resolution to xx-Bits
@@ -142,47 +148,43 @@ void readSensors()
     // the digital imputs are suppossed to simulate sensors!!!
     // reacting to inputs and "following opeartion/time"
     if (input1Digtital) {
-        Serial.println("INPUT_1 digital: 1");
         conveyorBelt1Status = 1;
+        Serial.println("INPUT_1 digital: 1");
     }
 
     else if (input2Digtital) {
         Serial.println("INPUT_2 digital: 1");
-        timestamp = millis();
+        objectTimestamp = millis();
         Serial.println("Moving to slideMotor1 ...");
     }
 
     // after ... seconds switch from conveyorBelt to slideMotor
     // this if only if the conveyorBelt1 was already active
-    else if (timeDifference > SWITCH_BELT_TO_SLIDE_TIME && conveyorBelt1Status == 1) {
+    else if (objTimeDiff > SWITCH_BELT_TO_SLIDE_TIME && conveyorBelt1Status == 1) {
         conveyorBelt1Status = 0;
         slideMotor1Status = 1;
         conveyorBelt2Status = 1;
 
+        slideMotorTimeStamp = millis();
         Serial.println("Switching from slideMotor1 to conveyorBelt2");
     }
 
     // object in front first taskMotor
     else if (input3Digtital) {
         Serial.println("INPUT_3 digital: 1");
-        slideMotor1Status = 0;
         conveyorBelt2Status = 0;
         taskMotor1Status = 1;
 
-        // take the next timestamp
-        timestamp = millis();
-
+        // take the next objectTimestamp
+        objectTimestamp = millis();
         Serial.println("conveyorBelt2 standstill, task1 working....");
     }
 
     // once the task is done, move to the next
-    else if (timeDifference > TASK_TIME && taskMotor1Status == 1) {
+    else if (objTimeDiff > TASK_TIME && taskMotor1Status == 1) {
         taskMotor1Status = 0;
         conveyorBelt2Status = 1;
         conveyorBelt3Status = 1;
-
-        slideMotor2Status = 0;
-        conveyorBelt4Status = 0;
 
         Serial.println("task1 finished, conveyorBelt2 & 3 moving");
     }
@@ -194,37 +196,65 @@ void readSensors()
         conveyorBelt2Status = 0;
         conveyorBelt3Status = 0;
 
-        // take the next timestamp
-        timestamp = millis();
+        // take the next objectTimestamp
+        objectTimestamp = millis();
+        Serial.println("task2 is working ...");
     }
 
     // once the task is done, prepare to move to sliding motor
-    else if (timeDifference > TASK_TIME && taskMotor2Status == 1) {
+    else if (objTimeDiff > TASK_TIME && taskMotor2Status == 1) {
         taskMotor2Status = 0;
         conveyorBelt3Status = 1;
 
-        // take the next timestamp
-        timestamp = millis();
+        // take the next objectTimestamp
+        objectTimestamp = millis();
         Serial.println("Task2 finished, conveyorBelt3 moving to slide2");
     }
 
     // after ... seconds the object in now on the sliding motor
     // move to last conveyorBelt, CHECK IF BELT 2 IS STILL MOVING !!!
-    else if (timeDifference > TASK_TIME && conveyorBelt3Status == 1 && conveyorBelt2Status != 1) {
+    else if (objTimeDiff > TASK_TIME && conveyorBelt3Status == 1 && conveyorBelt2Status != 1) {
         slideMotor2Status = 1;
         conveyorBelt3Status = 0;
         conveyorBelt4Status = 1;
+
+        slideMotorTimeStamp = millis();
         Serial.println("switching from slidingMotor2 to conveyorBelt4");
     }
 
     // once the object arrived at the end, STOP
     else if (input5Digtital) {
         Serial.println("INPUT_5 digital: 1");
-        slideMotor2Status = 0;
         conveyorBelt4Status = 0;
-        timestamp = 0;
-        timeDifference = 0;
+        // reset
+        objectTimestamp = 0;
+        objTimeDiff = 0;
         Serial.println("conveyorBelt4 standstill");
+    }
+
+    // move the slideMotors backward or stop if already backwards
+    if (slideMotorTimeDiff > SLIDE_MOVE_TIME && (slideMotor1Status > 0 || slideMotor2Status > 0)) {
+        if (slideMotor1Status == 1) {
+            slideMotor1Status = 2;
+            slideMotorTimeStamp = millis();
+            Serial.println("slideMotor1 MOVE BACK!");
+        } else if (slideMotor1Status == 2) {
+            slideMotor1Status = 0;
+            slideMotorTimeDiff = 0;
+            slideMotorTimeStamp = 0;
+            Serial.println("slideMotor1 STOP!");
+        }
+
+        if (slideMotor2Status == 1) {
+            slideMotor2Status = 2;
+            slideMotorTimeStamp = millis();
+            Serial.println("slideMotor2 MOVE BACK!");
+        } else if (slideMotor2Status == 2) {
+            slideMotor2Status = 0;
+            slideMotorTimeDiff = 0;
+            slideMotorTimeStamp = 0;
+            Serial.println("slideMotor2 STOP!");
+        }
     }
 
     /* for debug
