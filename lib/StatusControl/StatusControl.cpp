@@ -341,3 +341,17 @@ void writeOutputs()
         digitalWrite(TASK_MOTOR_2_OUT, LOW);
     }
 }
+
+void resetAllActuatorStatuses()
+{
+    conveyorBelt1Status = 0;
+    conveyorBelt2Status = 0;
+    conveyorBelt3Status = 0;
+    conveyorBelt4Status = 0;
+
+    slideMotor1Status = 0;
+    slideMotor2Status = 0;
+
+    taskMotor1Status = 0;
+    taskMotor2Status = 0;
+}

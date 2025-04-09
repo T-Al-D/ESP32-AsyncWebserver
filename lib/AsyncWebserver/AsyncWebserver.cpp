@@ -1,10 +1,5 @@
 #include "AsyncWebserver.h"
-#include "HTML.h"
-#include "StatusControl.h"
-#include <WiFi.h>
 
-extern bool button1Status;
-extern bool button2Status;
 extern String output;
 
 void setupAsyncWebServer(AsyncWebServer& server)
@@ -48,7 +43,7 @@ void handleOnConnect(AsyncWebServerRequest* request)
     button1Status = false;
     button2Status = false;
     output = "HTTP up!\nButton1 & Button2: OFF ";
-    request->send(200, "text/html", SendHTML(button1Status, button2Status, output));
+    request->send(200, "text/html", SendHTML());
 }
 
 void handleButtonToggle(AsyncWebServerRequest* request, int buttonNumber, bool newStatus)
@@ -76,7 +71,7 @@ void handleButtonToggle(AsyncWebServerRequest* request, int buttonNumber, bool n
 
     // output string and sending request
     output = pressedButton + "\nStatus\nchange:" + currentStatus;
-    request->send(200, "text/html", SendHTML(button1Status, button2Status, output));
+    request->send(200, "text/html", SendHTML());
 }
 
 void handleReset(AsyncWebServerRequest* request)
@@ -84,12 +79,12 @@ void handleReset(AsyncWebServerRequest* request)
     button1Status = false;
     button2Status = false;
     output = "RESET ALL";
-    request->send(200, "text/html", SendHTML(button1Status, button2Status, output));
+    request->send(200, "text/html", SendHTML());
 }
 
 void handleRefereshStatuses(AsyncWebServerRequest* request)
 {
-    request->send(200, "text/html", SendHTML(button1Status, button2Status, output));
+    request->send(200, "text/html", SendHTML());
 }
 
 void handleInputText(AsyncWebServerRequest* request)
@@ -99,11 +94,11 @@ void handleInputText(AsyncWebServerRequest* request)
         otherInfo = request->getParam("param")->value();
     }
     output = "Text :\n" + otherInfo;
-    request->send(200, "text/html", SendHTML(button1Status, button2Status, otherInfo));
+    request->send(200, "text/html", SendHTML());
 }
 
 void handleNotFound(AsyncWebServerRequest* request)
 {
     output = "Not Found!\nError 404";
-    request->send(404, "text/plain", output);
+    request->send(404, "text/plain");
 }

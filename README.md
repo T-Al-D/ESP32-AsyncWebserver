@@ -34,4 +34,4 @@ Other Info:
 Usage of space in kilobyte (during compile -> duration 33s):
 
 - RAM : 44,5
-- Flash : 788,6
+- Flash : 793,1
