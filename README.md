@@ -1,21 +1,20 @@
 # ESP32-AsyncWebserver
 
-A small project for an **Asyc Webserver** on ESP32: Access Point (Standalone) is used.
-Functions:
+A modified **Asyc Webserver** on ESP32 for my final Project.
+Access Point (Standalone) is used.
+It has all functions from base-branch. Further functions:
 
-- 2 buttons on a dynamic website to control
-- extra button for reset
-- photo-resistor is being read for button1 and button2
-- website refreshes, if state changes
-- one small input element for textinput
-- website "prints" the textinput
+- 8 actuators are controlled by 5 sensors
+- "timemeasure" in StatusControl.cpp
+- website representing the (current) state of the actuators
 
 Tools that I used for the project:
 
 - [ESP Tool](https://espressif.github.io/esptool-js/)
 - [Platform.IO for VSCODE](https://platformio.org/install/ide?install=vscode)
 - [Driver for the USB-URAT connection](https://www.silabs.com/developer-tools/usb-to-uart-bridge-vcp-drivers?tab=downloads)
-- [Documentation of the board](<https://resource.heltec.cn/download/WiFi_Kit_32_V3>)
+- [Documentation of the board](https://resource.heltec.cn/download/WiFi_Kit_32_V3)
+- [Building a HTML Webpage](https://www.w3schools.com/html/tryit.asp?filename=tryhtml_default)
 
 Chip where this Programm was developed/tested:
 
