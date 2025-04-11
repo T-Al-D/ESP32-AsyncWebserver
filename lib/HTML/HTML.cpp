@@ -150,18 +150,17 @@ String SendHTML()
     // closing container
     ptr += "</div>";
 
-    // Button designs
-    ptr += "<!-- Data Unit Separator -->";
-    ptr += R"rawliteral(<div id="button1"> )rawliteral";
-    ptr += DesignButton(button1Status, "button1") + "</div>";
-    ptr += "<!-- Data Unit Separator -->";
-    ptr += R"rawliteral(<div id="button2"> )rawliteral";
-    ptr += DesignButton(button2Status, "button2") + "</div>";
+    // last Data Unit Seperator
     ptr += "<!-- Data Unit Separator -->";
 
     // reset button
     ptr += R"rawliteral( <div id="reset">
         <p> Reset everything :<p> <a href="/reset" class="button reset-button">RESET ALL<a>
+        <div> )rawliteral";
+
+    // "Home" -button
+    ptr += R"rawliteral( <div id="home">
+        <p> Home :<p> <a href="/" class="button reset-button">Home<a>
         <div> )rawliteral";
 
     // Other Info in <pre>
@@ -199,13 +198,10 @@ String SendHTML()
             document.getElementById("taskMotor2").innerHTML     = parts[6];
             document.getElementById("slideMotor2").innerHTML    = parts[7];
             document.getElementById("conveyorBelt4").innerHTML  = parts[8];
-
-            document.getElementById('button1').innerHTML = parts[9];
-            document.getElementById('button2').innerHTML = parts[10];
         });
     }
 
-    setInterval(fetchButtonStatus, 1000);
+    setInterval(fetchButtonStatus, 500);
     fetchButtonStatus();
     </script>
 

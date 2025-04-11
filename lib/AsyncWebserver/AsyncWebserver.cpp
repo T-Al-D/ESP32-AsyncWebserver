@@ -4,8 +4,11 @@ extern String output;
 
 void setupAsyncWebServer(AsyncWebServer& server)
 {
-    server.on("/", HTTP_GET, handleOnConnect);
+    server.on("/", HTTP_GET, [](AsyncWebServerRequest* request) {
+        handleOnConnect(request);
+    });
 
+    /*
     server.on("/button1on", HTTP_GET, [](AsyncWebServerRequest* request) {
         handleButtonToggle(request, 1, true);
     });
@@ -18,6 +21,7 @@ void setupAsyncWebServer(AsyncWebServer& server)
     server.on("/button2off", HTTP_GET, [](AsyncWebServerRequest* request) {
         handleButtonToggle(request, 2, false);
     });
+    */
 
     // reset everything
     server.on("/reset", HTTP_GET, [](AsyncWebServerRequest* request) {
@@ -42,10 +46,11 @@ void handleOnConnect(AsyncWebServerRequest* request)
     Serial.println("Received request on /");
     button1Status = false;
     button2Status = false;
-    output = "HTTP up!\nButton1 & Button2: OFF ";
+    output = "HTTP up!\nActuators off ";
     request->send(200, "text/html", SendHTML());
 }
 
+/*
 void handleButtonToggle(AsyncWebServerRequest* request, int buttonNumber, bool newStatus)
 {
     // depending wether current status has to be set to LOW or High
@@ -73,12 +78,12 @@ void handleButtonToggle(AsyncWebServerRequest* request, int buttonNumber, bool n
     output = pressedButton + "\nStatus\nchange:" + currentStatus;
     request->send(200, "text/html", SendHTML());
 }
+*/
 
 void handleReset(AsyncWebServerRequest* request)
 {
-    button1Status = false;
-    button2Status = false;
-    output = "RESET ALL";
+    resetAllActuatorStatuses();
+    output = "RESET ALL!";
     request->send(200, "text/html", SendHTML());
 }
 

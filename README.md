@@ -2,11 +2,13 @@
 
 A modified **Asyc Webserver** on ESP32 for my final Project.
 Access Point (Standalone) is used.
-It has all functions from base-branch. Further functions:
+It dosen´t have the same functions from base-branch! Functions:
 
 - 8 actuators are controlled by 5 sensors
 - "timemeasure" in StatusControl.cpp
 - website representing the (current) state of the actuators
+- Reset-Button for all Actators
+- "Home-Button"
 
 Tools that I used for the project:
 
@@ -32,5 +34,5 @@ Other Info:
 
 Usage of space in kilobyte (during compile -> duration 33s):
 
-- RAM : 44,5
-- Flash : 793,1
+- RAM : 44,1
+- Flash : 783,9

@@ -10,7 +10,7 @@
 void setupAsyncWebServer(AsyncWebServer& server);
 
 void handleOnConnect(AsyncWebServerRequest* request);
-void handleButtonToggle(AsyncWebServerRequest* request, int buttonNumber, bool newStatus);
+// void handleButtonToggle(AsyncWebServerRequest* request, int buttonNumber, bool newStatus);
 void handleReset(AsyncWebServerRequest* request);
 void handleRefereshStatuses(AsyncWebServerRequest* request);
 

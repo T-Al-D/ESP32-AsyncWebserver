@@ -1,26 +1,11 @@
 #include "StatusControl.h"
 
-/* [env:esp32-s3-devkitm-1]
-LED1 = 46;LED2 = 45;
-PHOTO_RESISTOR_1 = 1; P_R_2 = 2;
-
-[env:az-delivery-devkit-v4]
-LED1 = 32;LED2 = 33;
-PHOTO_RESISTOR_1 = 0; P_R_2 = 2;
-*/
-
-// define the pins
-const short PHOTO_RESISTOR_1 = 1;
-const short PHOTO_RESISTOR_2 = 2;
-
-const short LED1 = 46;
-const short LED2 = 45;
-
 // define statuses
 bool button1Status = false;
 bool button2Status = false;
 
 /////////////////////////// FACTORY SIMULATION //////////////////////////
+// define the pins
 // 5 inputs for the factory simulation
 const short INPUT_1 = 7;
 const short INPUT_2 = 6;
@@ -39,15 +24,17 @@ short slideMotor2Status = 0;
 short taskMotor1Status = 0;
 short taskMotor2Status = 0;
 
-// sequence of operations
+// sequence of operations -> in this order !
 const short CONVEYOR_BELT_1_OUT = 48;
-const short SLIDE_MOTOR_1_OUT = 47;
+const short SLIDE_MOTOR_1_FORWARD_OUT = 47;
+const short SLIDE_MOTOR_1_BACKWARD_OUT = 45;
 const short CONVEYOR_BELT_2_OUT = 33;
 const short TASK_MOTOR_1_OUT = 34;
 
 const short CONVEYOR_BELT_3_OUT = 38;
 const short TASK_MOTOR_2_OUT = 19;
-const short SLIDE_MOTOR_2_OUT = 41;
+const short SLIDE_MOTOR_2_FORWARD_OUT = 41;
+const short SLIDE_MOTOR_2_BACKWARD_OUT = 46;
 const short CONVEYOR_BELT_4_OUT = 42;
 
 // time for specifc operations
@@ -62,7 +49,6 @@ unsigned long slideMotorTimeStamp = 0;
 unsigned long slideMotorTimeDiff = 0;
 
 /////////////////////////// FACTORY SIMULATION //////////////////////////
-
 // "import" global variables
 extern String output;
 extern unsigned long currentMilliSeconds;
@@ -70,9 +56,6 @@ extern unsigned long currentMilliSeconds;
 void setPins()
 {
     // set inputs
-    pinMode(PHOTO_RESISTOR_1, INPUT);
-    pinMode(PHOTO_RESISTOR_2, INPUT);
-
     // default:0 , if connect to +: 1
     pinMode(INPUT_1, INPUT_PULLDOWN);
     pinMode(INPUT_2, INPUT_PULLDOWN);
@@ -80,33 +63,31 @@ void setPins()
     pinMode(INPUT_4, INPUT_PULLDOWN);
     pinMode(INPUT_5, INPUT_PULLDOWN);
 
-    // set outputs
-    pinMode(LED1, OUTPUT);
-    pinMode(LED2, OUTPUT);
-
-    // outputs for factory (simulated with LED´s)
+    // set outputs for factory (simulated with LED´s)
     pinMode(CONVEYOR_BELT_1_OUT, OUTPUT);
     pinMode(CONVEYOR_BELT_2_OUT, OUTPUT);
     pinMode(CONVEYOR_BELT_3_OUT, OUTPUT);
     pinMode(CONVEYOR_BELT_4_OUT, OUTPUT);
 
-    pinMode(SLIDE_MOTOR_1_OUT, OUTPUT);
-    pinMode(SLIDE_MOTOR_2_OUT, OUTPUT);
+    pinMode(SLIDE_MOTOR_1_FORWARD_OUT, OUTPUT);
+    pinMode(SLIDE_MOTOR_2_FORWARD_OUT, OUTPUT);
+
+    pinMode(SLIDE_MOTOR_1_BACKWARD_OUT, OUTPUT);
+    pinMode(SLIDE_MOTOR_2_BACKWARD_OUT, OUTPUT);
 
     pinMode(TASK_MOTOR_1_OUT, OUTPUT);
     pinMode(TASK_MOTOR_2_OUT, OUTPUT);
 
-    // set all pins with a "starting" value
-    digitalWrite(LED1, LOW);
-    digitalWrite(LED2, LOW);
-
+    // set pins with a "starting" value
     digitalWrite(CONVEYOR_BELT_1_OUT, LOW);
     digitalWrite(CONVEYOR_BELT_2_OUT, LOW);
     digitalWrite(CONVEYOR_BELT_3_OUT, LOW);
     digitalWrite(CONVEYOR_BELT_4_OUT, LOW);
 
-    digitalWrite(SLIDE_MOTOR_1_OUT, LOW);
-    digitalWrite(SLIDE_MOTOR_2_OUT, LOW);
+    digitalWrite(SLIDE_MOTOR_1_FORWARD_OUT, LOW);
+    digitalWrite(SLIDE_MOTOR_1_BACKWARD_OUT, LOW);
+    digitalWrite(SLIDE_MOTOR_2_FORWARD_OUT, LOW);
+    digitalWrite(SLIDE_MOTOR_2_BACKWARD_OUT, LOW);
 
     digitalWrite(TASK_MOTOR_1_OUT, LOW);
     digitalWrite(TASK_MOTOR_2_OUT, LOW);
@@ -124,9 +105,8 @@ void readSensors()
 
     // set the ADC-resolution to xx-Bits
     analogReadResolution(12);
-    int photoResistorValue1 = analogRead(PHOTO_RESISTOR_1);
-    int photoResistorValue2 = analogRead(PHOTO_RESISTOR_2);
 
+    /*
     // react to certain sensors
     if (photoResistorValue1 > 1300) {
         button1Status = true;
@@ -136,7 +116,7 @@ void readSensors()
         button2Status = true;
         output = "B2 stat\nchange:\nON";
         Serial.println("Photo_Sensor2 passed!");
-    }
+    }*/
 
     // read the inputs for factory control
     bool input1Digtital = digitalRead(INPUT_1);
@@ -266,17 +246,6 @@ void readSensors()
 // depending on the status, change the output
 void writeOutputs()
 {
-    if (button1Status) {
-        digitalWrite(LED1, HIGH);
-    } else {
-        digitalWrite(LED1, LOW);
-    }
-
-    if (button2Status) {
-        digitalWrite(LED2, HIGH);
-    } else {
-        digitalWrite(LED2, LOW);
-    }
 
     if (conveyorBelt1Status) {
         digitalWrite(CONVEYOR_BELT_1_OUT, HIGH);
@@ -304,26 +273,32 @@ void writeOutputs()
 
     switch (slideMotor1Status) {
     case 0:
-        digitalWrite(SLIDE_MOTOR_1_OUT, LOW);
+        digitalWrite(SLIDE_MOTOR_1_FORWARD_OUT, LOW);
+        digitalWrite(SLIDE_MOTOR_1_BACKWARD_OUT, LOW);
         break;
     case 1:
-        digitalWrite(SLIDE_MOTOR_1_OUT, HIGH);
+        digitalWrite(SLIDE_MOTOR_1_FORWARD_OUT, HIGH);
+        digitalWrite(SLIDE_MOTOR_1_BACKWARD_OUT, LOW);
         break;
     case 2:
-        digitalWrite(SLIDE_MOTOR_1_OUT, HIGH);
+        digitalWrite(SLIDE_MOTOR_1_FORWARD_OUT, LOW);
+        digitalWrite(SLIDE_MOTOR_1_BACKWARD_OUT, HIGH);
     default:
         break;
     }
 
     switch (slideMotor2Status) {
     case 0:
-        digitalWrite(SLIDE_MOTOR_2_OUT, LOW);
+        digitalWrite(SLIDE_MOTOR_2_FORWARD_OUT, LOW);
+        digitalWrite(SLIDE_MOTOR_2_BACKWARD_OUT, LOW);
         break;
     case 1:
-        digitalWrite(SLIDE_MOTOR_2_OUT, HIGH);
+        digitalWrite(SLIDE_MOTOR_2_FORWARD_OUT, HIGH);
+        digitalWrite(SLIDE_MOTOR_2_BACKWARD_OUT, LOW);
         break;
     case 2:
-        digitalWrite(SLIDE_MOTOR_2_OUT, HIGH);
+        digitalWrite(SLIDE_MOTOR_2_FORWARD_OUT, LOW);
+        digitalWrite(SLIDE_MOTOR_2_BACKWARD_OUT, HIGH);
         break;
     default:
         break;
@@ -342,6 +317,7 @@ void writeOutputs()
     }
 }
 
+// reset everything to start "fresh"
 void resetAllActuatorStatuses()
 {
     conveyorBelt1Status = 0;
@@ -354,4 +330,10 @@ void resetAllActuatorStatuses()
 
     taskMotor1Status = 0;
     taskMotor2Status = 0;
+
+    objectTimestamp = 0;
+    objTimeDiff = 0;
+    slideMotorTimeStamp = 0;
+    slideMotorTimeDiff = 0;
+    Serial.println("Everything reset!");
 }
