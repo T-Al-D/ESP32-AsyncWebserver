@@ -210,6 +210,7 @@ void readSensors()
         objectTimestamp = 0;
         objTimeDiff = 0;
         Serial.println("conveyorBelt4 standstill");
+        resetAllActuatorStatuses();
     }
 
     // move the slideMotors backward or stop if already backwards

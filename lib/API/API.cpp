@@ -1,27 +1,37 @@
-#include "AsyncWebserver.h"
+#include "API.h"
 
+// network credentials
+const char* SSID = "ESP32-Experiment";
+const char* PASSWORD = "12345678";
+
+AsyncWebServer server(80);
+
+/* put IP Address details */
+IPAddress local_ip(192, 168, 4, 1);
+IPAddress gateway(192, 168, 1, 1);
+IPAddress subnet(255, 255, 255, 0);
+
+// import from main.cpp
 extern String output;
+
+void startServer()
+{
+    // Setup Wi-Fi
+    WiFi.softAP(SSID, PASSWORD);
+    WiFi.config(local_ip, gateway, subnet);
+
+    // Setup webserver routes
+    setupAsyncWebServer(server);
+
+    // start the APIs
+    server.begin();
+}
 
 void setupAsyncWebServer(AsyncWebServer& server)
 {
     server.on("/", HTTP_GET, [](AsyncWebServerRequest* request) {
         handleOnConnect(request);
     });
-
-    /*
-    server.on("/button1on", HTTP_GET, [](AsyncWebServerRequest* request) {
-        handleButtonToggle(request, 1, true);
-    });
-    server.on("/button1off", HTTP_GET, [](AsyncWebServerRequest* request) {
-        handleButtonToggle(request, 1, false);
-    });
-    server.on("/button2on", HTTP_GET, [](AsyncWebServerRequest* request) {
-        handleButtonToggle(request, 2, true);
-    });
-    server.on("/button2off", HTTP_GET, [](AsyncWebServerRequest* request) {
-        handleButtonToggle(request, 2, false);
-    });
-    */
 
     // reset everything
     server.on("/reset", HTTP_GET, [](AsyncWebServerRequest* request) {
@@ -44,41 +54,9 @@ void setupAsyncWebServer(AsyncWebServer& server)
 void handleOnConnect(AsyncWebServerRequest* request)
 {
     Serial.println("Received request on /");
-    button1Status = false;
-    button2Status = false;
     output = "HTTP up!\nActuators off ";
     request->send(200, "text/html", SendHTML());
 }
-
-/*
-void handleButtonToggle(AsyncWebServerRequest* request, int buttonNumber, bool newStatus)
-{
-    // depending wether current status has to be set to LOW or High
-    uint8_t statusValue = newStatus ? HIGH : LOW;
-    String currentStatus = String(newStatus ? "ON" : "OFF");
-    String pressedButton = "";
-
-    // switch depending which button was pressed
-    switch (buttonNumber) {
-    case 1:
-        button1Status = newStatus;
-        pressedButton = "Button1";
-        break;
-    case 2:
-        button2Status = newStatus;
-        pressedButton = "Button2";
-        break;
-
-    default:
-        pressedButton = "ERROR";
-        break;
-    }
-
-    // output string and sending request
-    output = pressedButton + "\nStatus\nchange:" + currentStatus;
-    request->send(200, "text/html", SendHTML());
-}
-*/
 
 void handleReset(AsyncWebServerRequest* request)
 {

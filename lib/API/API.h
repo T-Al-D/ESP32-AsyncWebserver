@@ -7,6 +7,7 @@
 #include <ESPAsyncWebServer.h>
 #include <WiFi.h>
 
+void startServer();
 void setupAsyncWebServer(AsyncWebServer& server);
 
 void handleOnConnect(AsyncWebServerRequest* request);
