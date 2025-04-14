@@ -1,6 +1,8 @@
 #include <HTML.h>
 
+// global variables
 extern String output;
+extern FactoryController factory;
 
 String DesignButton(bool status, String unit)
 {
@@ -121,31 +123,31 @@ String SendHTML()
     <div class="container">
     )rawliteral";
 
-    // actuators in the production flow 
+    // actuators in the production flow
     ptr += "<!-- Data Unit Separator -->";
     ptr += R"rawliteral(<div id="conveyorBelt1"> )rawliteral";
-    ptr += DesignActuator(conveyorBelt1Status, "conveyorBelt1") + "</div>";
+    ptr += DesignActuator((short)factory.belt1.getState(), "conveyorBelt1") + "</div>";
     ptr += "<!-- Data Unit Separator -->";
     ptr += R"rawliteral(<div id="slideMotor1"> )rawliteral";
-    ptr += DesignActuator(slideMotor1Status, "slideMotor1") + "</div>";
+    ptr += DesignActuator((short)factory.slide1.getState(), "slideMotor1") + "</div>";
     ptr += "<!-- Data Unit Separator -->";
     ptr += R"rawliteral(<div id="conveyorBelt2"> )rawliteral";
-    ptr += DesignActuator(conveyorBelt2Status, "conveyorBelt2") + "</div>";
+    ptr += DesignActuator((short)factory.belt2.getState(), "conveyorBelt2") + "</div>";
     ptr += "<!-- Data Unit Separator -->";
     ptr += R"rawliteral(<div id="taskMotor1"> )rawliteral";
-    ptr += DesignActuator(taskMotor1Status, "taskMotor1") + "</div>";
+    ptr += DesignActuator((short)factory.task1.getState(), "taskMotor1") + "</div>";
     ptr += "<!-- Data Unit Separator -->";
     ptr += R"rawliteral(<div id="conveyorBelt3"> )rawliteral";
-    ptr += DesignActuator(conveyorBelt3Status, "conveyorBelt3") + "</div>";
+    ptr += DesignActuator((short)factory.belt3.getState(), "conveyorBelt3") + "</div>";
     ptr += "<!-- Data Unit Separator -->";
     ptr += R"rawliteral(<div id="taskMotor2"> )rawliteral";
-    ptr += DesignActuator(taskMotor2Status, "taskMotor2") + "</div>";
+    ptr += DesignActuator((short)factory.task2.getState(), "taskMotor2") + "</div>";
     ptr += "<!-- Data Unit Separator -->";
     ptr += R"rawliteral(<div id="slideMotor2"> )rawliteral";
-    ptr += DesignActuator(slideMotor2Status, "slideMotor2") + "</div>";
+    ptr += DesignActuator((short)factory.slide2.getState(), "slideMotor2") + "</div>";
     ptr += "<!-- Data Unit Separator -->";
     ptr += R"rawliteral(<div id="conveyorBelt4"> )rawliteral";
-    ptr += DesignActuator(conveyorBelt4Status, "conveyorBelt4") + "</div>";
+    ptr += DesignActuator((short)factory.belt4.getState(), "conveyorBelt4") + "</div>";
 
     // closing container
     ptr += "</div>";

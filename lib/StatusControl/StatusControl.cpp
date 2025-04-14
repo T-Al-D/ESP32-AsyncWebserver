@@ -1,9 +1,5 @@
 #include "StatusControl.h"
 
-// define statuses
-bool button1Status = false;
-bool button2Status = false;
-
 /////////////////////////// FACTORY SIMULATION //////////////////////////
 // define the pins
 // 5 inputs for the factory simulation

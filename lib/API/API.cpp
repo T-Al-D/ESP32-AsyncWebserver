@@ -13,14 +13,15 @@ IPAddress subnet(255, 255, 255, 0);
 
 // import from main.cpp
 extern String output;
+extern FactoryController factory;
 
 void startServer()
 {
-    // Setup Wi-Fi
+    // setup Wi-Fi
     WiFi.softAP(SSID, PASSWORD);
     WiFi.config(local_ip, gateway, subnet);
 
-    // Setup webserver routes
+    // setup webserver routes
     setupAsyncWebServer(server);
 
     // start the APIs
@@ -60,7 +61,7 @@ void handleOnConnect(AsyncWebServerRequest* request)
 
 void handleReset(AsyncWebServerRequest* request)
 {
-    resetAllActuatorStatuses();
+    factory.reset();
     output = "RESET ALL!";
     request->send(200, "text/html", SendHTML());
 }

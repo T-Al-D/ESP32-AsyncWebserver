@@ -1,24 +1,28 @@
 #include "API.h"
 #include "DisplayManager.h"
 #include "StatusControl.h"
+#include "../Controller/FactoryController/FactoryController.h"
 #include <ESPAsyncWebServer.h>
 #include <WiFi.h>
 #include <Wire.h>
 
 // GLOBAL VARIABLES
 String output = "";
-unsigned long currentMilliSeconds = 0; // 0 to 4.294.967.295
+// unsigned long currentMilliSeconds = 0; // 0 to 4.294.967.295
+
+// objects
+FactoryController factory;
 
 void setup()
 {
     // set baudrate
     Serial.begin(115200);
 
+    // setup objects
+    factory.setupFactoryController();
+
     // activate the API
     startServer();
-
-    // set the pins
-    setPins();
 
     // Initialize display
     initDisplay();
@@ -27,12 +31,7 @@ void setup()
 // put your main code here, to run repeatedly:
 void loop()
 {
-    // get current milliseconds since start
-    currentMilliSeconds = millis();
-    // Serial.println(currentMilliSeconds);
-
-    readSensors();
-    writeOutputs();
+    factory.loopFactoryController();
 
     // Serial.println(output);
     showOutput(output);
