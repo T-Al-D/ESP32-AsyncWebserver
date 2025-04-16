@@ -5,12 +5,13 @@
 
 class Sensor {
 public:
-    Sensor(short inputPin);
+    Sensor(short inputPin, int threshold = 1);
 
     bool isTriggered() const;
 
 private:
     short pin;
+    int triggerThreshold;
 };
 
 #endif

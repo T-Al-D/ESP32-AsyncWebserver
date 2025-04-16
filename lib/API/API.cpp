@@ -54,7 +54,7 @@ void setupAsyncWebServer(AsyncWebServer& server)
 
 void handleOnConnect(AsyncWebServerRequest* request)
 {
-    Serial.println("Received request on /");
+    // Serial.println("Received request on /");
     output = "HTTP up!\nActuators off ";
     request->send(200, "text/html", SendHTML());
 }

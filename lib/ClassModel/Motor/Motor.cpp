@@ -5,6 +5,7 @@ Motor::Motor(short forwardPin, short backwardPin)
     , backwardPin(backwardPin)
     , state(MotorState::STOPPED)
 {
+    // init state
     pinMode(forwardPin, OUTPUT);
     if (backwardPin != -1) {
         // -1 means not used

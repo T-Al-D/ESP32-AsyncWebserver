@@ -26,8 +26,8 @@ const short SLIDE_MOTOR_2_BACKWARD_OUT = 46;
 const short CONVEYOR_BELT_4_OUT = 42;
 
 // time for specifc operations
-const short SWITCH_BELT_TO_SLIDE_TIME = 3000;
-const short SLIDE_MOVE_TIME = 2000;
+const short SWITCH_BELT_TO_SLIDE_TIME = 1900;
+const short SLIDE_MOVE_TIME = 2075;
 const short TASK_TIME = 3000;
 
 /////////////////////////// FACTORY SIMULATION //////////////////////////
