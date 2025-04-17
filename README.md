@@ -2,13 +2,15 @@
 
 A modified **Asyc Webserver** on ESP32 for my final Project.
 Access Point (Standalone) is used.
-It dosen´t have the same functions from base-branch! Functions:
+-> Tested with [fischertechnik IndustrialSimulation](https://www.fischertechnik.biz/indexed-line-24)
+It dosen´t have the same functions from base-branch! 
+Functions:
 
-- 8 actuators are controlled by 5 sensors
-- "timemeasure" in StatusControl.cpp
+- Object-oriented approach to FactoryController (logic to drive the actuators)
+- 8 actuators are controlled by 5 sensors (analog read)
 - website representing the (current) state of the actuators
-- Reset-Button for all Actators
-- "Home-Button"
+- RESET-Button for all actators
+- HOME-Button
 
 Tools that I used for the project:
 
@@ -21,7 +23,7 @@ Tools that I used for the project:
 Chip where this Programm was developed/tested:
 
 - Chip is ESP32-S3 (QFN56) (revision v0.2)
-- Features: Wi-Fi,BLE, Embedded Flash 8MB (GD)
+- Features: Wi-Fi, BLE, Embedded Flash 8MB (GD)
 - Crystal is 40MHz
 
 Other Info:
@@ -34,5 +36,5 @@ Other Info:
 
 Usage of space in kilobyte (during compile -> duration 33s):
 
-- RAM : 44,1
-- Flash : 783,9
+- RAM : 44,6
+- Flash : 792,7
