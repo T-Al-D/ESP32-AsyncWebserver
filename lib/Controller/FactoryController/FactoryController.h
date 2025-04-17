@@ -27,6 +27,9 @@ private:
     unsigned long objectTimestamp;
     unsigned long slideMotorTimestamp;
 
+    bool task1AlreadyActive;
+    bool task2AlreadyActive;
+
     // logic
     void processLogic(unsigned long now);
     void updateActuators();

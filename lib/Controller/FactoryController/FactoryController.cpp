@@ -50,6 +50,8 @@ FactoryController::FactoryController()
     , objectTimestamp(0)
     , slideMotorTimestamp(0)
 {
+    task1AlreadyActive = false;
+    task2AlreadyActive = false;
 }
 
 void FactoryController::setupFactoryController()
@@ -94,10 +96,11 @@ void FactoryController::processLogic(unsigned long now)
         Serial.println("slide1 forward, belt2 active");
     }
 
-    else if (input3.isTriggered()) {
+    else if (input3.isTriggered() && task1AlreadyActive == false) {
         belt2.stop();
         task1.moveForward();
         objectTimestamp = now;
+        task1AlreadyActive = true;
         output = "TASK1\nworking\n...";
         Serial.println("INPUT_3: task1 working ...");
     }
@@ -110,10 +113,11 @@ void FactoryController::processLogic(unsigned long now)
         Serial.println("task1 finished, belt2 und 3 active");
     }
 
-    else if (input4.isTriggered()) {
+    else if (input4.isTriggered() && task2AlreadyActive == false) {
         task2.moveForward();
         belt2.stop();
         belt3.stop();
+        task2AlreadyActive = true;
         objectTimestamp = now;
         output = "TASK2 \nworking..\n BELT1, 2 work";
         Serial.println("INPUT_4: task2 working ...");
@@ -184,13 +188,16 @@ void FactoryController::reset()
     belt4.stop();
 
     slide1.stop();
-    slide2.stop();
+    //slide2.stop();
 
     task1.stop();
     task2.stop();
 
     objectTimestamp = 0;
-    slideMotorTimestamp = 0;
+    //slideMotorTimestamp = 0;
+
+    task1AlreadyActive = false;
+    task2AlreadyActive = false;
 
     Serial.println("Everything reset!");
 }

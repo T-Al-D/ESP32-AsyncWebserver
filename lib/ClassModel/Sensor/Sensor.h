@@ -5,7 +5,7 @@
 
 class Sensor {
 public:
-    Sensor(short inputPin, int threshold = 1);
+    Sensor(short inputPin, int threshold = 4000);
 
     bool isTriggered() const;
 

@@ -4,15 +4,16 @@ Sensor::Sensor(short inputPin, int threshold)
     : pin(inputPin)
     , triggerThreshold(threshold)
 {
-    pinMode(pin, INPUT_PULLDOWN);
+    // pinMode(pin, INPUT_PULLDOWN);
+    pinMode(pin, ANALOG);
 }
 
 bool Sensor::isTriggered() const
 {
-    int value = digitalRead(pin);
+    int value = analogRead(pin);
     bool returnValue = false;
 
-    if (value >= triggerThreshold) {
+    if (value < triggerThreshold) {
         returnValue = true;
         char stringBuffer[70];
         sprintf(stringBuffer, "SensorPin %d: %d", pin, value);
