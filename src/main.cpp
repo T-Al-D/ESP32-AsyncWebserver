@@ -1,6 +1,5 @@
 #include "API.h"
 #include "DisplayManager.h"
-#include "StatusControl.h"
 #include "../Controller/FactoryController/FactoryController.h"
 #include <ESPAsyncWebServer.h>
 #include <WiFi.h>
