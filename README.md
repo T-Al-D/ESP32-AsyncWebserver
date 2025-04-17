@@ -3,7 +3,9 @@
 A modified **Asyc Webserver** on ESP32 for my final Project.
 Access Point (Standalone) is used.
 -> Tested with [fischertechnik IndustrialSimulation](https://www.fischertechnik.biz/indexed-line-24)
-It dosen´t have the same functions from base-branch! 
+-> partial schema of the circuit is in the folder _diagram_
+It dosen´t have the same functions from base-branch!
+
 Functions:
 
 - Object-oriented approach to FactoryController (logic to drive the actuators)
