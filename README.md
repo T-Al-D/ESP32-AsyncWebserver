@@ -1,4 +1,4 @@
-# Digitization of a production model with the ESP32
+# Digitalization of a production model with the ESP32
 
 A modified **Asyc Webserver** on ESP32 for my final Project.
 Access Point (Standalone) is used.
